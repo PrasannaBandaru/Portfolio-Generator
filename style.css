@@ -1,68 +1,101 @@
 :root {
-  --bg: #ffffff;
-  --text: #000000;
-  --accent: #007bff;
-}
-
-body.dark {
-  --bg: #1e1e1e;
-  --text: #f4f4f4;
-  --accent: #ff6b6b;
+  --accent: #2563eb;
+  --font: sans-serif;
 }
 
 body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: Arial, sans-serif;
-  padding: 20px;
+  margin: 0;
+  font-family: var(--font);
+  background-color: #f9f9f9;
+  color: #111;
   transition: all 0.3s ease;
+}
+
+[data-theme='dark'] {
+  background-color: #111;
+  color: #f0f0f0;
 }
 
 .container {
   max-width: 800px;
   margin: auto;
-  background: var(--bg);
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  padding: 2rem;
 }
 
-.input-area label {
-  display: block;
-  margin-bottom: 15px;
-}
-
-input, textarea {
+input, textarea, select {
   width: 100%;
   padding: 10px;
-  border-radius: 6px;
+  margin: 0.4rem 0;
   border: 1px solid #ccc;
-  margin-top: 5px;
+  border-radius: 6px;
+  font-family: inherit;
+}
+
+textarea {
+  height: 100px;
 }
 
 button {
-  background: var(--accent);
+  background-color: var(--accent);
   color: white;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border: none;
-  border-radius: 6px;
-  margin: 10px 5px 0 0;
+  margin: 10px 5px 0;
+  border-radius: 5px;
   cursor: pointer;
+  transition: background 0.3s ease;
 }
 
-.output-area {
-  margin-top: 30px;
-  padding: 20px;
-  background: #f0f0f0;
-  border-radius: 8px;
+button:hover {
+  background-color: #00000022;
+  color: var(--accent);
+  border: 1px solid var(--accent);
 }
 
-body.dark .output-area {
-  background: #2a2a2a;
+.settings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 1rem;
 }
 
-img.profile-pic {
-  width: 120px;
-  border-radius: 60px;
-  margin-bottom: 15px;
+.output-card {
+  padding: 1.5rem;
+  margin-top: 2rem;
+  border: 2px dashed var(--accent);
+  border-radius: 12px;
+  animation: fadeIn 0.4s ease;
 }
+
+.output-card.modern {
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  background: #fff;
+}
+
+.output-card.minimal {
+  border-style: solid;
+  background: transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Accent Themes */
+body[data-accent='blue'] { --accent: #2563eb; }
+body[data-accent='green'] { --accent: #16a34a; }
+body[data-accent='red'] { --accent: #dc2626; }
+body[data-accent='purple'] { --accent: #7c3aed; }
+body[data-accent='orange'] { --accent: #f97316; }
+
+/* Font */
+body[data-font='sans-serif'] { --font: 'Segoe UI', sans-serif; }
+body[data-font='serif'] { --font: Georgia, serif; }
+body[data-font='monospace'] { --font: 'Courier New', monospace; }
