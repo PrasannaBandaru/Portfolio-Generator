@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio Generator</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  <script src="firebase-config.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-900 transition-all">
+  <div class="max-w-3xl mx-auto p-6">
+    <h1 class="text-3xl font-bold text-center mb-6">🚀 Portfolio Generator</h1>
+
+    <!-- Save/Load Cloud Profiles -->
+    <div class="bg-white p-6 rounded-lg shadow-md space-y-4">
+      <div class="mb-4">
+        <input type="text" id="profileName" placeholder="Profile name" class="border p-2 rounded w-1/2" />
+        <button onclick="saveProfileToFirebase()" class="bg-blue-500 text-white px-3 py-1 rounded">☁ Save to Cloud</button>
+        <button onclick="loadProfileFromFirebase()" class="bg-green-600 text-white px-3 py-1 rounded">☁ Load from Cloud</button>
+      </div>
+
+      <input type="text" id="name" placeholder="Your Name" class="w-full border p-2 rounded" />
+      <textarea id="bio" placeholder="Short Bio" class="w-full border p-2 rounded"></textarea>
+      <input type="text" id="skills" placeholder="Skills (comma separated)" class="w-full border p-2 rounded" />
+      <textarea id="projects" placeholder="Projects (one per line)" class="w-full border p-2 rounded"></textarea>
+      <input type="email" id="email" placeholder="Your Email" class="w-full border p-2 rounded" />
+      <input type="file" id="photo" accept="image/*" class="w-full" />
+      <input type="file" id="resume" accept=".pdf" class="w-full" />
+
+      <select id="template" class="w-full border p-2 rounded">
+        <option value="modern">Modern</option>
+        <option value="minimal">Minimal</option>
+      </select>
+
+      <div class="flex flex-wrap gap-2 mt-4">
+        <button onclick="generatePortfolio()" class="bg-blue-600 text-white px-4 py-2 rounded">Generate</button>
+        <button onclick="downloadHTML()" class="bg-green-600 text-white px-4 py-2 rounded">Download HTML</button>
+        <button onclick="downloadPDF()" class="bg-red-500 text-white px-4 py-2 rounded">Download PDF</button>
+        <button onclick="toggleTheme()" class="bg-gray-700 text-white px-4 py-2 rounded">Toggle Theme</button>
+        <button onclick="generateShareLink()" class="bg-purple-600 text-white px-4 py-2 rounded">🔗 Generate Share Link</button>
+
+      </div>
+    </div>
+
+    <div id="portfolio" class="mt-10 p-6 bg-white rounded-lg shadow-lg print:bg-white"></div>
+  </div>
+</body>
+</html>
