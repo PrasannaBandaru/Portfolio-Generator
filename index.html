@@ -1,45 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Portfolio Generator</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
-<body class="transition-all">
-  <div class="container mx-auto p-6 max-w-3xl">
-    <h1 class="text-3xl font-bold mb-4">🚀 Portfolio Generator</h1>
+<body>
+  <div class="container">
+    <h1>🚀 Portfolio Generator</h1>
 
-    <!-- Theme Toggle -->
-    <div class="flex items-center gap-2 mb-4">
-      <label class="flex items-center cursor-pointer">
-        <span class="mr-2">🌞</span>
-        <input type="checkbox" id="themeToggle" onchange="toggleTheme()" class="hidden">
-        <div class="w-12 h-6 bg-gray-400 rounded-full p-1 flex items-center justify-between relative">
-          <div id="toggleThumb" class="bg-white w-4 h-4 rounded-full shadow-md transform transition-transform duration-300"></div>
-        </div>
-        <span class="ml-2">🌙</span>
+    <!-- Theme and Font Settings -->
+    <div class="settings">
+      <label>🌗 Theme:
+        <select id="themeSelector" onchange="applyTheme()">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+      </label>
+
+      <label>🎨 Color:
+        <select id="colorSelector" onchange="applyAccent()">
+          <option value="blue">Blue</option>
+          <option value="green">Green</option>
+          <option value="red">Red</option>
+          <option value="purple">Purple</option>
+          <option value="orange">Orange</option>
+        </select>
+      </label>
+
+      <label>🔤 Font:
+        <select id="fontSelector" onchange="applyFont()">
+          <option value="sans-serif">Sans Serif</option>
+          <option value="serif">Serif</option>
+          <option value="monospace">Monospace</option>
+        </select>
+      </label>
+
+      <label>📐 Layout:
+        <select id="layoutSelector">
+          <option value="modern">Modern</option>
+          <option value="minimal">Minimal</option>
+        </select>
       </label>
     </div>
 
-    <!-- Form Inputs -->
-    <input id="name" placeholder="Your Name" class="w-full mb-3 p-2 rounded border" />
-    <textarea id="bio" placeholder="Short Bio" class="w-full mb-3 p-2 rounded border"></textarea>
-    <input id="skills" placeholder="Skills (comma separated)" class="w-full mb-3 p-2 rounded border" />
-    <textarea id="projects" placeholder="Projects (one per line)" class="w-full mb-3 p-2 rounded border"></textarea>
-    <input id="email" placeholder="Your Email" class="w-full mb-3 p-2 rounded border" />
-    <select id="template" class="w-full mb-3 p-2 rounded border">
-      <option>Modern</option>
-    </select>
-
-    <!-- Buttons -->
-    <div class="flex flex-wrap gap-2 mt-4">
-      <button onclick="generatePortfolio()" class="bg-blue-600 text-white px-4 py-2 rounded">Generate</button>
-      <button onclick="toggleTheme()" class="bg-gray-700 text-white px-4 py-2 rounded">Toggle Theme</button>
+    <!-- Input Form -->
+    <div class="form">
+      <input type="text" id="fullName" placeholder="Full Name">
+      <input type="text" id="tagline" placeholder="Tagline (e.g., Passionate Developer)">
+      <input type="text" id="jobRole" placeholder="Job Title (e.g., Full Stack Developer)">
+      <input type="text" id="email" placeholder="Email">
+      <input type="text" id="contact" placeholder="Contact Number (optional)">
+      <input type="text" id="github" placeholder="GitHub Profile URL">
+      <input type="text" id="linkedin" placeholder="LinkedIn Profile URL">
+      <input type="text" id="birthday" placeholder="Birthday (e.g., 1999-01-01)">
+      <input type="text" id="gender" placeholder="Gender (optional)">
+      <textarea id="projects" placeholder="Projects (one per line: Title - Description)"></textarea>
     </div>
 
-    <!-- Output Area -->
-    <div id="output" class="mt-6 p-4 bg-white rounded shadow"></div>
+    <!-- Action Buttons -->
+    <div class="buttons">
+      <button onclick="generatePortfolio()">Generate</button>
+      <button onclick="toggleTheme()">Toggle Theme</button>
+    </div>
+
+    <!-- Output -->
+    <div id="output"></div>
   </div>
 
   <script src="script.js"></script>
