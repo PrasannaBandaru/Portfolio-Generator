@@ -1,78 +1,81 @@
-function generatePortfolio() {
-  const name = document.getElementById("name").value.trim();
-  const bio = document.getElementById("bio").value.trim();
-  const skills = document.getElementById("skills").value.trim();
-  const projects = document.getElementById("projects").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const template = document.getElementById("template").value;
+function applyTheme() {
+  const theme = document.getElementById('themeSelector').value;
+  document.documentElement.setAttribute('data-theme', theme);
+  localStorage.setItem('theme', theme);
+}
 
-  if (!name || !bio || !skills || !projects || !email) {
-    alert("⚠️ Please fill all fields before generating your portfolio.");
-    return;
-  }
+function applyAccent() {
+  const color = document.getElementById('colorSelector').value;
+  document.body.setAttribute('data-accent', color);
+  localStorage.setItem('accent', color);
+}
 
-  const skillsList = skills
-    .split(',')
-    .map(skill => `<li class="text-sm">${skill.trim()}</li>`)
-    .join('');
-
-  const projectsList = projects
-    .split('\n')
-    .map(project => `<li class="text-sm">${project.trim()}</li>`)
-    .join('');
-
-  const outputHTML = `
-    <div class="p-6 bg-white rounded-2xl shadow-md border border-gray-200">
-      <h1 class="text-3xl font-bold text-blue-700">${name}</h1>
-      <p class="mt-2 text-gray-700">${bio}</p>
-
-      <div class="mt-4">
-        <h2 class="text-xl font-semibold text-gray-800">Skills</h2>
-        <ul class="list-disc ml-6 mt-2 text-gray-600">${skillsList}</ul>
-      </div>
-
-      <div class="mt-4">
-        <h2 class="text-xl font-semibold text-gray-800">Projects</h2>
-        <ul class="list-disc ml-6 mt-2 text-gray-600">${projectsList}</ul>
-      </div>
-
-      <p class="mt-4 text-gray-700">📧 <strong>Contact:</strong> <a href="mailto:${email}" class="text-blue-600 underline">${email}</a></p>
-    </div>
-  `;
-
-  document.getElementById("output").innerHTML = outputHTML;
+function applyFont() {
+  const font = document.getElementById('fontSelector').value;
+  document.body.setAttribute('data-font', font);
+  localStorage.setItem('font', font);
 }
 
 function toggleTheme() {
-  const body = document.body;
-  const checkbox = document.getElementById("themeToggle");
-  const thumb = document.getElementById("toggleThumb");
-
-  body.classList.toggle("dark");
-
-  if (body.classList.contains("dark")) {
-    localStorage.setItem("theme", "dark");
-    checkbox.checked = true;
-    thumb.style.transform = "translateX(24px)";
-  } else {
-    localStorage.setItem("theme", "light");
-    checkbox.checked = false;
-    thumb.style.transform = "translateX(0)";
-  }
+  const current = document.documentElement.getAttribute('data-theme');
+  const newTheme = current === 'dark' ? 'light' : 'dark';
+  document.documentElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  document.getElementById('themeSelector').value = newTheme;
 }
 
-// Load saved theme on startup
-window.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("theme");
-  const thumb = document.getElementById("toggleThumb");
-  const checkbox = document.getElementById("themeToggle");
+function generatePortfolio() {
+  const layout = document.getElementById('layoutSelector').value;
 
-  if (savedTheme === "dark") {
-    document.body.classList.add("dark");
-    checkbox.checked = true;
-    if (thumb) thumb.style.transform = "translateX(24px)";
-  } else {
-    checkbox.checked = false;
-    if (thumb) thumb.style.transform = "translateX(0)";
-  }
+  const fullName = document.getElementById('fullName').value;
+  const tagline = document.getElementById('tagline').value;
+  const jobRole = document.getElementById('jobRole').value;
+  const email = document.getElementById('email').value;
+  const contact = document.getElementById('contact').value;
+  const github = document.getElementById('github').value;
+  const linkedin = document.getElementById('linkedin').value;
+  const birthday = document.getElementById('birthday').value;
+  const gender = document.getElementById('gender').value;
+  const projectList = document.getElementById('projects').value.split('\n');
+
+  let projectHTML = "<ul>";
+  projectList.forEach(line => {
+    const [title, desc] = line.split(" - ");
+    if (title) {
+      projectHTML += `<li><strong>${title}</strong>: ${desc || ""}</li>`;
+    }
+  });
+  projectHTML += "</ul>";
+
+  const output = `
+    <div class="output-card ${layout}">
+      <h2>${fullName}</h2>
+      <p><em>${tagline}</em></p>
+      <p><strong>Role:</strong> ${jobRole}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      ${contact ? `<p><strong>Contact:</strong> ${contact}</p>` : ""}
+      <p><strong>GitHub:</strong> <a href="${github}" target="_blank">${github}</a></p>
+      <p><strong>LinkedIn:</strong> <a href="${linkedin}" target="_blank">${linkedin}</a></p>
+      <p><strong>Birthday:</strong> ${birthday}</p>
+      <p><strong>Gender:</strong> ${gender}</p>
+      <h3>Projects</h3>
+      ${projectHTML}
+    </div>
+  `;
+  document.getElementById('output').innerHTML = output;
+}
+
+// Load saved theme and preferences
+window.addEventListener('DOMContentLoaded', () => {
+  const theme = localStorage.getItem('theme') || 'light';
+  const accent = localStorage.getItem('accent') || 'blue';
+  const font = localStorage.getItem('font') || 'sans-serif';
+
+  document.documentElement.setAttribute('data-theme', theme);
+  document.body.setAttribute('data-accent', accent);
+  document.body.setAttribute('data-font', font);
+
+  document.getElementById('themeSelector').value = theme;
+  document.getElementById('colorSelector').value = accent;
+  document.getElementById('fontSelector').value = font;
 });
